@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DORF Journal System</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="desktop">
+    <div class="desktop-icons">
+      <div class="desktop-icon">
+        <div class="icon-image">&#128221;</div>
+        <span>Journal.exe</span>
+      </div>
+    </div>
+    
+    <div class="window">
+      <div class="window-titlebar">
+        <div class="window-title">
+          <span class="window-icon">&#128221;</span>
+          DORF Journal System v1.0
+        </div>
+        <div class="window-controls">
+          <% if defined?(@back_url) && @back_url %>
+            <a href="<%= @back_url %>" class="window-btn close-btn" title="Close">X</a>
+          <% elsif request.path != '/' %>
+            <a href="/" class="window-btn close-btn" title="Close">X</a>
+          <% else %>
+            <span class="window-btn close-btn disabled">X</span>
+          <% end %>
+        </div>
+      </div>
+      
+      <div class="window-menubar">
+        <span class="menu-item">File</span>
+        <span class="menu-item">Edit</span>
+        <span class="menu-item">View</span>
+        <span class="menu-item">Help</span>
+      </div>
+      
+      <div class="window-content">
+        <%= yield %>
+      </div>
+      
+      <div class="window-statusbar">
+        <span>Ready</span>
+        <span class="status-right">DORF OS 3.11</span>
+      </div>
+    </div>
+    
+    <div class="taskbar">
+      <div class="start-button">
+        <span class="start-icon">&#9776;</span>
+        Start
+      </div>
+      <div class="taskbar-items">
+        <div class="taskbar-item active">
+          <span>&#128221;</span> DORF Journal
+        </div>
+      </div>
+      <div class="system-tray">
+        <span id="clock"></span>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      document.getElementById('clock').textContent = hours + ':' + minutes;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>

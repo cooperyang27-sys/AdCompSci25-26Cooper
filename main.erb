@@ -1,0 +1,50 @@
+<div class="main-screen">
+  <div class="archive-header">
+    <h1>&#128218; Journal Archive</h1>
+    <p>Select an entry to read</p>
+  </div>
+  
+  <% if @entries.empty? %>
+    <div class="empty-state">
+      <div class="empty-icon">&#128466;</div>
+      <h2>No Entries Yet</h2>
+      <p>Your journal is empty. Start writing your first entry!</p>
+      <a href="/entries/new" class="btn btn-primary">Create First Entry</a>
+    </div>
+  <% else %>
+    <div class="entries-grid">
+      <% @entries.each do |entry| %>
+        <a href="/entries/<%= entry.id %>?page=<%= @page %>" class="entry-box">
+          <div class="entry-number">#<%= entry.id %></div>
+          <div class="entry-preview">
+            <div class="entry-author"><%= entry.author_name %></div>
+            <div class="entry-date"><%= entry.entry_date %></div>
+          </div>
+        </a>
+      <% end %>
+    </div>
+    
+    <div class="pagination">
+      <% if @page > 1 %>
+        <a href="/entries?page=<%= @page - 1 %>" class="page-btn">&laquo; Previous</a>
+      <% else %>
+        <span class="page-btn disabled">&laquo; Previous</span>
+      <% end %>
+      
+      <span class="page-info">Page <%= @page %> of <%= @total_pages %></span>
+      
+      <% if @page < @total_pages %>
+        <a href="/entries?page=<%= @page + 1 %>" class="page-btn">Next &raquo;</a>
+      <% else %>
+        <span class="page-btn disabled">Next &raquo;</span>
+      <% end %>
+    </div>
+  <% end %>
+  
+  <div class="archive-footer">
+    <a href="/download/all" class="download-link">
+      <span class="dl-icon">&#128190;</span>
+      Download All Entries
+    </a>
+  </div>
+</div>
